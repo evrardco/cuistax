@@ -1,0 +1,1 @@
+g++ CMakeFiles/main.dir/src/main.cxx.o CMakeFiles/main.dir/src/base/drawable.cxx.o CMakeFiles/main.dir/src/base/dynamic.cxx.o CMakeFiles/main.dir/src/controller.cxx.o CMakeFiles/main.dir/src/entities/myRect.cxx.o -o main  -lSDL2 
