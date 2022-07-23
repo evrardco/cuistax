@@ -1,3 +1,0 @@
-/home/colin/SDLTest/build/CMakeFiles/main.dir
-/home/colin/SDLTest/build/CMakeFiles/edit_cache.dir
-/home/colin/SDLTest/build/CMakeFiles/rebuild_cache.dir
