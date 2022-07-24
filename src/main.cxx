@@ -4,7 +4,7 @@
 #include "constants.hxx"
 #include "controller.hxx"
 #include "entities/myRect.hxx"
-
+#include "utils/timer.hxx"
 /* Sets constants */
 #define WIDTH 800
 #define HEIGHT 600
@@ -52,7 +52,12 @@ int main (int argc, char **argv)
 
 
   MyRect player(renderer, WIDTH/2, HEIGHT/2, 30, 30);
-
+  Timer center_timer(
+    5.0, 
+    [&player](void){player.set_x(WIDTH/2); player.set_y(HEIGHT/2); printf("Firing!\n");},
+    REPEAT,
+    true
+  );
 
   gettimeofday(&t0, NULL);
   while(keep_window_open) {
@@ -76,6 +81,7 @@ int main (int argc, char **argv)
       // printf("vx=%f, vy=%f, ", player.vx, player.vy);
       // printf("dx=%f, dy=%f\n", player.vx * dt, player.vy * dt);
       player.step(dt);
+      center_timer.step(dt);
 
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       SDL_RenderClear(renderer);

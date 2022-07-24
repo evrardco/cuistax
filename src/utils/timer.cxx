@@ -1,5 +1,5 @@
 #include "timer.hxx"
-Timer::Timer(double interval, std::function<void(void)> callback, timer_type = ONCE, bool activated = true) {
+Timer::Timer(double interval, std::function<void(void)> callback, timer_type type = ONCE, bool activated = true) {
     this->callback = callback;
     this->interval = interval;
     this->time_left = interval;
