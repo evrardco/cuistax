@@ -5,6 +5,7 @@
 #include "controller.hxx"
 #include "entities/myRect.hxx"
 #include "utils/timer.hxx"
+#include "entities/node.hxx"
 /* Sets constants */
 #define WIDTH 800
 #define HEIGHT 600
@@ -13,19 +14,13 @@
 
 int main (int argc, char **argv)
 {
-  /* Initialises data */
   SDL_Window *window = NULL;
-  
-  /*
-  * Initialises the SDL video subsystem (as well as the events subsystem).
-  * Returns 0 on success or a negative error code on failure using SDL_GetError().
-  */
+
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     fprintf(stderr, "SDL failed to initialise: %s\n", SDL_GetError());
     return 1;
   }
 
-  /* Creates a SDL window */
   window = SDL_CreateWindow("SDL Example", /* Title of the SDL window */
 			    SDL_WINDOWPOS_UNDEFINED, /* Position x of the window */
 			    SDL_WINDOWPOS_UNDEFINED, /* Position y of the window */
@@ -33,7 +28,6 @@ int main (int argc, char **argv)
 			    HEIGHT, /* Height of the window in pixels */
 			    0); /* Additional flag(s) */
 
-  /* Checks if window has been created; if not, exits program */
   if (window == NULL) {
     fprintf(stderr, "SDL window failed to initialise: %s\n", SDL_GetError());
     return 1;
@@ -50,6 +44,7 @@ int main (int argc, char **argv)
   uint32_t delay_time;
   SDL_Event e;
 
+  Group root(true);
 
   MyRect player(renderer, WIDTH/2, HEIGHT/2, 30, 30);
   Timer center_timer(
@@ -58,6 +53,8 @@ int main (int argc, char **argv)
     REPEAT,
     true
   );
+
+  root.push_back(&player);
 
   gettimeofday(&t0, NULL);
   while(keep_window_open) {
@@ -70,22 +67,21 @@ int main (int argc, char **argv)
                   keep_window_open = false;
                   break;
               case SDL_KEYDOWN:
-                  handle_keydown(&e, &player);
+                  handle_keydown(&e, player);
                   break;
               case SDL_KEYUP:
-                  handle_keyup(&e, &player);
+                  handle_keyup(&e, player);
                   break;
                   
           }
       }
-      // printf("vx=%f, vy=%f, ", player.vx, player.vy);
-      // printf("dx=%f, dy=%f\n", player.vx * dt, player.vy * dt);
-      player.step(dt);
+
+      root.step(dt);
       center_timer.step(dt);
 
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       SDL_RenderClear(renderer);
-      player.draw();
+      root.draw(renderer);
 
 
       SDL_RenderPresent(renderer);

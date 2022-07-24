@@ -11,6 +11,3 @@ void Drawable::set_x(double x) {
 void Drawable::set_y(double y) {
     this->y = y;
 }
-SDL_Renderer * Drawable::get_renderer() {
-    return this->renderer;
-}

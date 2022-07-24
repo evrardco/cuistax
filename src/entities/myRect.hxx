@@ -5,7 +5,7 @@ class MyRect : public Entity {
     public:
         MyRect(SDL_Renderer *, double, double, int, int);
         void step(double);
-        void draw();
+        void draw(SDL_Renderer *);
         int get_width();
         int get_height();
         void set_width(int);
