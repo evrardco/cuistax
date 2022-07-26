@@ -3,7 +3,7 @@
 #include "SDL2/SDL.h"
 class MyRect : public Entity {
     public:
-        MyRect(SDL_Renderer *, double, double, int, int);
+        MyRect(double, double, int, int);
         void step(double);
         void draw(SDL_Renderer *);
         int get_width();

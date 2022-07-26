@@ -14,6 +14,8 @@ file(GLOB SOURCES
     src/base/*.cxx
     src/entities/*.hxx
     src/entities/*.cxx
+    src/entities/physics/*.hxx
+    src/entities/physics/*.cxx
     src/utils/*.hxx
     src/utils/*.cxx
     src/constants.hxx

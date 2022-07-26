@@ -22,7 +22,7 @@ void MyRect::step(double dt) {
     this->y += this->vy * dt;
 }
 
-MyRect::MyRect(SDL_Renderer * renderer, double x, double y, int w, int h) {
+MyRect::MyRect(double x, double y, int w, int h) {
     this->x = x;
     this->y = y;
     this->rect.w = w;

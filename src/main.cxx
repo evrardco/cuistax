@@ -6,9 +6,12 @@
 #include "entities/myRect.hxx"
 #include "utils/timer.hxx"
 #include "entities/node.hxx"
+#include "entities/physics/box.hxx"
+#include "entities/physics/particle.hxx"
+#include <cmath>
+#include <cstdlib>
 /* Sets constants */
-#define WIDTH 800
-#define HEIGHT 600
+
 #define DELAY 3000
 
 
@@ -40,21 +43,32 @@ int main (int argc, char **argv)
 
   timeval t0, t1;
   double dt = 0;
+  double total_time = 0;
   uint32_t dt_millis;
   uint32_t delay_time;
   SDL_Event e;
 
   Group root(true);
 
-  MyRect player(renderer, WIDTH/2, HEIGHT/2, 30, 30);
-  Timer center_timer(
-    5.0, 
-    [&player](void){player.set_x(WIDTH/2); player.set_y(HEIGHT/2); printf("Firing!\n");},
-    REPEAT,
-    true
-  );
+  Box player(WIDTH/2, HEIGHT/2, 30, 30);
 
-  root.push_back(&player);
+  Group universe(true);
+  std::vector<Particle *> particles;
+  int n_particles = 10000;
+  int particle_size = 4;
+  for (int i = 0; i < n_particles; i++) {
+    Particle * p = new Particle(
+      ((double)rand() / RAND_MAX) * (WIDTH - particle_size),
+      ((double)rand() / RAND_MAX) * (HEIGHT - particle_size),
+      particle_size,
+      particle_size,
+      particles,
+      i
+    ); 
+    universe.push_back(p);
+    particles.push_back(p);
+  }
+  root.push_back(&universe);
 
   gettimeofday(&t0, NULL);
   while(keep_window_open) {
@@ -76,12 +90,29 @@ int main (int argc, char **argv)
           }
       }
 
-      root.step(dt);
-      center_timer.step(dt);
-
+      double max_vel = -INFINITY;
+      for (int i = 0; i < particles.size(); i++) {
+        Particle * p = particles.at(i);
+        double vel = p->get_vel();
+        if (vel > max_vel) {
+          max_vel = vel;
+        }
+      }
+      for (int i = 0; i < particles.size(); i++) {
+        Particle * p = particles.at(i);
+        p->set_max_vel(max_vel);
+      }
+      for (int i = 0; i < particles.size(); i++) {
+        Particle * p = particles.at(i);
+        p->step(dt);
+      }
+      total_time += dt;
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       SDL_RenderClear(renderer);
-      root.draw(renderer);
+      for (int i = 0; i < particles.size(); i++) {
+        Particle * p = particles.at(i);
+        p->draw(renderer);
+      }
 
 
       SDL_RenderPresent(renderer);

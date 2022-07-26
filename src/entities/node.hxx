@@ -1,3 +1,4 @@
+#pragma once
 #include "../base/entity.hxx"
 #include "../base/drawable.hxx"
 #include "SDL2/SDL.h"
