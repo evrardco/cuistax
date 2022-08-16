@@ -99,10 +99,9 @@ int main (int argc, char **argv)
       for (int i = 0; i < particles.size(); i++) {
         Particle * p = particles.at(i);
         p->set_max_vel(max_vel);
-        p->step(dt * 10);
+        p->step(dt * 0.001);
 
       }
-      printf("Done stepping.\n");
       total_time += dt;
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       SDL_RenderClear(renderer);
@@ -113,7 +112,6 @@ int main (int argc, char **argv)
 
 
       SDL_RenderPresent(renderer);
-      printf("Done rendering.\n");
 
       
       //printf("dt=%lf\n", dt);
