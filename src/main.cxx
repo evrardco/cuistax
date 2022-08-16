@@ -52,23 +52,21 @@ int main (int argc, char **argv)
 
   Box player(WIDTH/2, HEIGHT/2, 30, 30);
 
-  Group universe(true);
   std::vector<Particle *> particles;
-  int n_particles = 10000;
-  int particle_size = 4;
+  int n_particles = 600;
+  int particle_size = 3;
   for (int i = 0; i < n_particles; i++) {
     Particle * p = new Particle(
       ((double)rand() / RAND_MAX) * (WIDTH - particle_size),
       ((double)rand() / RAND_MAX) * (HEIGHT - particle_size),
       particle_size,
       particle_size,
-      particles,
+      &particles,
       i
     ); 
-    universe.push_back(p);
     particles.push_back(p);
   }
-  root.push_back(&universe);
+
 
   gettimeofday(&t0, NULL);
   while(keep_window_open) {
@@ -101,11 +99,10 @@ int main (int argc, char **argv)
       for (int i = 0; i < particles.size(); i++) {
         Particle * p = particles.at(i);
         p->set_max_vel(max_vel);
+        p->step(dt * 10);
+
       }
-      for (int i = 0; i < particles.size(); i++) {
-        Particle * p = particles.at(i);
-        p->step(dt);
-      }
+      printf("Done stepping.\n");
       total_time += dt;
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       SDL_RenderClear(renderer);
@@ -116,6 +113,8 @@ int main (int argc, char **argv)
 
 
       SDL_RenderPresent(renderer);
+      printf("Done rendering.\n");
+
       
       //printf("dt=%lf\n", dt);
       gettimeofday(&t1, NULL);
