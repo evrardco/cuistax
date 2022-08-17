@@ -1,0 +1,17 @@
+#pragma once
+#include "../base/resource.hxx"
+#include <cstring>
+#include <SDL2/SDL.h>
+class TextureResource : public Resource {
+    public:
+        TextureResource(char * path, SDL_Renderer * renderer);
+        ~TextureResource();
+        void * get_data();
+        void load();
+    protected:
+        SDL_Surface * surface;
+        SDL_Texture * texture;
+        SDL_Renderer * renderer;
+    private:
+};
+
