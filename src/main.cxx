@@ -36,7 +36,7 @@ int main (int argc, char **argv)
     return 1;
   }
 
-  uint32_t frame_time = (int)(TARGET_FPS / 60.0f);
+  uint32_t frame_time = (int)(1000.0f / TARGET_FPS);
   SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   bool keep_window_open = true;
 
@@ -99,7 +99,7 @@ int main (int argc, char **argv)
       for (int i = 0; i < particles.size(); i++) {
         Particle * p = particles.at(i);
         p->set_max_vel(max_vel);
-        p->step(dt * 0.001);
+        p->step(dt * 0.05);
 
       }
       total_time += dt;

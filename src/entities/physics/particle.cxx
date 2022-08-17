@@ -20,7 +20,6 @@ void Particle::apply_gravity (Particle other, double dt) {
     double oldvy = this->vy;
 
     double r = this->dist(other);
-    //printf("r=%f\n", r);
     double accel_mul = other.get_mass() * UNIVERSAL_CONSTANT / (pow(r, 2) + 1);
     accel_mul += pow(other.get_mass(), r);
     
@@ -35,7 +34,6 @@ void Particle::apply_gravity (Particle other, double dt) {
 }
 void Particle::step(double dt) {
     for (int i = this->id; i < (this->universe)->size(); i++) {
-        //printf("Applying gravity from %d to %d\n", this->id, i);
         this->apply_gravity(*(this->universe->at(i)), dt);
     }
     this->green = (int)(255 * (this->get_vel()/this->max_vel));
@@ -43,7 +41,7 @@ void Particle::step(double dt) {
 }
 Particle::Particle(double x, double y, int w, int h, std::vector<Particle *> *universe , int id) : Box(x, y, w, h) {
     this->green = 0;
-    this->mass = 1;//((double)rand() / RAND_MAX);
+    this->mass = ((double)rand() / RAND_MAX);
     //printf("mass=%f\n", this->mass);
     //this->vx = (double)rand() / RAND_MAX;
     //this->vy = (double)rand() / RAND_MAX;   
