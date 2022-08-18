@@ -8,6 +8,9 @@
 #include "entities/node.hxx"
 #include "entities/physics/box.hxx"
 #include "entities/physics/particle.hxx"
+#include "resource/resource_manager.hxx"
+#include "resource/texture_resource.hxx"
+#include "entities/sprite.hxx"
 #include <cmath>
 #include <cstdlib>
 /* Sets constants */
@@ -35,9 +38,14 @@ int main (int argc, char **argv)
     fprintf(stderr, "SDL window failed to initialise: %s\n", SDL_GetError());
     return 1;
   }
+  SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  /**
+   * Loading assets
+   */
+  ResourceManager * resources = new ResourceManager();
+  resources->add_and_load("zig", new TextureResource("resources/graphics/fonts/zig_green_size16_cell18.bmp", renderer));
 
   uint32_t frame_time = (int)(1000.0f / TARGET_FPS);
-  SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   bool keep_window_open = true;
 
 
@@ -49,23 +57,20 @@ int main (int argc, char **argv)
   SDL_Event e;
 
   Group root(true);
-
-  Box player(WIDTH/2, HEIGHT/2, 30, 30);
-
-  std::vector<Particle *> particles;
-  int n_particles = 600;
-  int particle_size = 3;
-  for (int i = 0; i < n_particles; i++) {
-    Particle * p = new Particle(
-      ((double)rand() / RAND_MAX) * (WIDTH - particle_size),
-      ((double)rand() / RAND_MAX) * (HEIGHT - particle_size),
-      particle_size,
-      particle_size,
-      &particles,
-      i
-    ); 
-    particles.push_back(p);
-  }
+  Sprite font(
+    WIDTH/2, HEIGHT/2,
+    new TextureRect(
+      (SDL_Texture *)resources->get("zig")->get_data(),
+      0,
+      0,
+      512,
+      256
+    )
+  );
+  root.push_back(
+    &font
+  );
+  
 
 
   gettimeofday(&t0, NULL);
@@ -79,38 +84,21 @@ int main (int argc, char **argv)
                   keep_window_open = false;
                   break;
               case SDL_KEYDOWN:
-                  handle_keydown(&e, player);
+                  //handle_keydown(&e, player);
                   break;
               case SDL_KEYUP:
-                  handle_keyup(&e, player);
+                  //handle_keyup(&e, player);
                   break;
                   
           }
       }
+      root.step(dt);
 
-      double max_vel = -INFINITY;
-      for (int i = 0; i < particles.size(); i++) {
-        Particle * p = particles.at(i);
-        double vel = p->get_vel();
-        if (vel > max_vel) {
-          max_vel = vel;
-        }
-      }
-      for (int i = 0; i < particles.size(); i++) {
-        Particle * p = particles.at(i);
-        p->set_max_vel(max_vel);
-        p->step(dt * 0.05);
 
-      }
-      total_time += dt;
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       SDL_RenderClear(renderer);
-      for (int i = 0; i < particles.size(); i++) {
-        Particle * p = particles.at(i);
-        p->draw(renderer);
-      }
 
-
+      root.draw(renderer);
       SDL_RenderPresent(renderer);
 
       
@@ -130,8 +118,10 @@ int main (int argc, char **argv)
 
 
   /* Frees memory */
+  delete resources;
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
+
   
   /* Shuts down all SDL subsystems */
   SDL_Quit(); 

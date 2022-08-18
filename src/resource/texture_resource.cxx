@@ -19,9 +19,13 @@ void TextureResource::load() {
     this->loaded = true;
 }
 
-TextureResource::~TextureResource() {
+void TextureResource::free_data() {
     SDL_FreeSurface(this->surface);
     SDL_DestroyTexture(this->texture);
+}
+
+TextureResource::~TextureResource() {
+    this->free_data();
     delete this->path;
 }
 

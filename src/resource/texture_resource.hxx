@@ -7,6 +7,7 @@ class TextureResource : public Resource {
         TextureResource(char * path, SDL_Renderer * renderer);
         ~TextureResource();
         void * get_data();
+        void free_data();
         void load();
     protected:
         SDL_Surface * surface;
