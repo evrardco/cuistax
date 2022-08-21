@@ -45,7 +45,7 @@ int main (int argc, char **argv)
    */
   ResourceManager * resources = new ResourceManager();
   resources->add_and_load("zigBMP", new TextureResource("resources/graphics/fonts/zig_green_size16_cell18.bmp", renderer));
-  resources->add_and_load("zigFont")
+  resources->add_and_load("zigFont", new FontResource())
 
   uint32_t frame_time = (int)(1000.0f / TARGET_FPS);
   bool keep_window_open = true;
