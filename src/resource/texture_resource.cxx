@@ -10,6 +10,16 @@ TextureResource::TextureResource(char * path, SDL_Renderer * renderer) {
 void * TextureResource::get_data() {
     return this->texture;
 }
+
+int TextureResource::get_width() {
+    return this->surface->w;
+}
+
+int TextureResource::get_height() {
+    return this->surface->h;
+}
+
+
 void TextureResource::load() {
     this->surface = SDL_LoadBMP(this->path);
     if (this->surface == NULL) {
@@ -28,4 +38,5 @@ TextureResource::~TextureResource() {
     this->free_data();
     delete this->path;
 }
+
 

@@ -8,6 +8,8 @@ class TextureResource : public Resource {
         ~TextureResource();
         void * get_data();
         void free_data();
+        int get_width();
+        int get_height();
         void load();
     protected:
         SDL_Surface * surface;

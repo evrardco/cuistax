@@ -10,6 +10,7 @@
 #include "entities/physics/particle.hxx"
 #include "resource/resource_manager.hxx"
 #include "resource/texture_resource.hxx"
+#include "resource/font_resource.hxx"
 #include "entities/sprite.hxx"
 #include <cmath>
 #include <cstdlib>
@@ -43,7 +44,8 @@ int main (int argc, char **argv)
    * Loading assets
    */
   ResourceManager * resources = new ResourceManager();
-  resources->add_and_load("zig", new TextureResource("resources/graphics/fonts/zig_green_size16_cell18.bmp", renderer));
+  resources->add_and_load("zigBMP", new TextureResource("resources/graphics/fonts/zig_green_size16_cell18.bmp", renderer));
+  resources->add_and_load("zigFont")
 
   uint32_t frame_time = (int)(1000.0f / TARGET_FPS);
   bool keep_window_open = true;
