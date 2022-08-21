@@ -11,6 +11,7 @@
 #include "resource/resource_manager.hxx"
 #include "resource/texture_resource.hxx"
 #include "resource/font_resource.hxx"
+#include "utils/graphics/TextureRect.hxx"
 #include "entities/sprite.hxx"
 #include <cmath>
 #include <cstdlib>
@@ -44,9 +45,12 @@ int main (int argc, char **argv)
    * Loading assets
    */
   ResourceManager * resources = new ResourceManager();
-  resources->add_and_load("zigBMP", new TextureResource("resources/graphics/fonts/zig_green_size16_cell18.bmp", renderer));
-  resources->add_and_load("zigFont", new FontResource())
-
+  resources->add_and_load("zigTexture", new TextureResource("resources/graphics/fonts/zig_green_size16_cell18.bmp", renderer));
+  //FontResource(SDL_Renderer * renderer, TextureResource * texture, uint8_t char_size, uint8_t cell_size, uint8_t inter_char_size)
+  resources->add_and_load("zigFont", new FontResource(
+    renderer, (TextureResource *)resources->get("zigTexture"), 16, 18, 4
+  ));
+  printf("Done loading font\n");
   uint32_t frame_time = (int)(1000.0f / TARGET_FPS);
   bool keep_window_open = true;
 
@@ -61,13 +65,7 @@ int main (int argc, char **argv)
   Group root(true);
   Sprite font(
     WIDTH/2, HEIGHT/2,
-    new TextureRect(
-      (SDL_Texture *)resources->get("zig")->get_data(),
-      0,
-      0,
-      512,
-      256
-    )
+    &((std::vector<TextureRect> *)(resources->get_data("zigFont")))->at(65)
   );
   root.push_back(
     &font

@@ -7,7 +7,7 @@ class Resource {
         virtual void free_data() = 0;
 
     protected:
-        double loaded;
+        bool loaded = false;
         void * data;
         char * path;
     private:

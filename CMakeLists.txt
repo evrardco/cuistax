@@ -12,6 +12,8 @@ include_directories(${SDL2_INCLUDE_DIRS})
 file(GLOB SOURCES
     src/base/*.hxx
     src/base/*.cxx
+    src/drawables/*.cxx
+    srd/drawables/*.hxx 
     src/entities/*.hxx
     src/entities/*.cxx
     src/entities/physics/*.hxx

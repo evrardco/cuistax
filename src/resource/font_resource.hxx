@@ -4,7 +4,7 @@
 #include "../utils/graphics/TextureRect.hxx"
 #include <SDL2/SDL.h>
 #include <ctype.h>
-#include <array>
+#include <vector>
 class FontResource : public Resource {
     public:
         FontResource(SDL_Renderer * renderer, TextureResource * texture, uint8_t char_size, uint8_t cell_size, uint8_t inter_char_size);
@@ -17,7 +17,7 @@ class FontResource : public Resource {
         uint8_t inter_char_size;
         TextureResource * font_texture;
         SDL_Renderer * renderer;
-        std::array<TextureRect, 256> texture_rect_array;
+        std::vector<TextureRect> tex_rec_vec;
         
     private:
 };
@@ -45,11 +45,11 @@ void FontResource::load() {
     //TextureRect(SDL_Texture * texture, int x, int y, int w, int h)
     for (int i = 0; i < num_rows; i++) {
         for (int j = 0; j < num_cols; j++) {
-            this->texture_rect_array[i * num_rows + j] = TextureRect(
+            this->tex_rec_vec.push_back(TextureRect(
                 tex,
                 j * this->cell_size, i * this->cell_size,
                 this->char_size, this->char_size
-            ); 
+            )); 
         }
     }
 
@@ -61,5 +61,5 @@ void FontResource::free_data() {
 }
 
 void * FontResource::get_data() {
-    return &this->texture_rect_array;
+    return &this->tex_rec_vec;
 }
