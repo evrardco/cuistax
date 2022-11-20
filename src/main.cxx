@@ -5,13 +5,13 @@
 #include "controller.hxx"
 #include "entities/myRect.hxx"
 #include "utils/timer.hxx"
-#include "entities/node.hxx"
 #include "entities/physics/box.hxx"
 #include "entities/physics/particle.hxx"
 #include "resource/resource_manager.hxx"
 #include "resource/texture_resource.hxx"
 #include "resource/font_resource.hxx"
 #include "utils/graphics/TextureRect.hxx"
+#include "utils/DrawableGroup.hxx"
 #include "entities/sprite.hxx"
 #include <cmath>
 #include <cstdlib>
@@ -62,13 +62,10 @@ int main (int argc, char **argv)
   uint32_t delay_time;
   SDL_Event e;
 
-  Group root(true);
-  Sprite font(
-    WIDTH/2, HEIGHT/2,
-    &((std::vector<TextureRect> *)(resources->get_data("zigFont")))->at(65)
-  );
+  DrawableGroup root;
+  
   root.push_back(
-    &font
+    ((FontResource *)resources->get("zigFont"))->string_to_drawables("Hello world !", WIDTH/2, HEIGHT/2)
   );
   
 
@@ -92,7 +89,7 @@ int main (int argc, char **argv)
                   
           }
       }
-      root.step(dt);
+      //root.step(dt);
 
 
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 class TextureResource : public Resource {
     public:
-        TextureResource(char * path, SDL_Renderer * renderer);
+        TextureResource(const char * path, SDL_Renderer * renderer);
         ~TextureResource();
         void * get_data();
         void free_data();

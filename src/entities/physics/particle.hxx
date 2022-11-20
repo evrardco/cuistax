@@ -1,5 +1,4 @@
 #include "box.hxx"
-#include "../node.hxx"
 #include <cmath>
 #include <ctime>
 #include <cstdlib>

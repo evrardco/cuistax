@@ -1,8 +1,9 @@
 #include "texture_resource.hxx"
-TextureResource::TextureResource(char * path, SDL_Renderer * renderer) {
+#include <cstring>
+TextureResource::TextureResource(const char * path, SDL_Renderer * renderer) {
     size_t sz = strlen(path) + 1;
     this->path = new char[sz];
-    memcpy(this->path, path, sz);
+    strncpy(this->path, path, sz);
     this->loaded = false;
     this->renderer = renderer;
 }

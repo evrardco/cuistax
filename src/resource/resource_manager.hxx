@@ -3,16 +3,16 @@
 #include "../base/resource.hxx"
 class ResourceManager {  
     public:
-        void add(char * name, Resource * resource);
-        void load(char * name);
-        void add_and_load(char * name, Resource * resource);
-        void remove(char * name);
-        void * get_data(char * name);
-        Resource * get(char * name);
+        void add(const char * name, Resource * resource);
+        void load(const char * name);
+        void add_and_load(const char * name, Resource * resource);
+        void remove(const char * name);
+        void * get_data(const char * name);
+        Resource * get(const char * name);
         int get_size();
         ~ResourceManager();
     protected:
 
     private:
-        std::unordered_map<char *, Resource *> cache;
+        std::unordered_map<const char *, Resource *> cache;
 };
