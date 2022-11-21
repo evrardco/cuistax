@@ -1,6 +1,6 @@
 #pragma once
 #include "../base/entity.hxx"
-#include "../utils/graphics/TextureRect.hxx"
+#include "../utils/drawables/TextureRect.hxx"
 
 class Sprite : public Entity {
     public:

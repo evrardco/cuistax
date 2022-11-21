@@ -3,8 +3,8 @@
 #include "../base/resource.hxx"
 #include "../entities/sprite.hxx"
 #include "../resource/texture_resource.hxx"
-#include "../utils/graphics/TextureRect.hxx"
-#include "../utils/DrawableGroup.hxx"
+#include "../utils/drawables/TextureRect.hxx"
+#include "../utils/drawables/DrawableGroup.hxx"
 #include <SDL2/SDL.h>
 #include <ctype.h>
 #include <vector>
