@@ -3,7 +3,7 @@
 TextureResource::TextureResource(const char * path, SDL_Renderer * renderer) {
     size_t sz = strlen(path) + 1;
     this->path = new char[sz];
-    strncpy(this->path, path, sz);
+    strcpy(this->path, path);
     this->loaded = false;
     this->renderer = renderer;
 }

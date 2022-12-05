@@ -3,6 +3,8 @@
 #include "../resource/texture_resource.hxx"
 #include "../utils/drawables/TextureRect.hxx"
 #include "../utils/drawables/DrawableGroup.hxx"
+#include "../drawables/image.hxx"
+#include "../resource/texture_zone_resource.hxx"
 #include <SDL2/SDL.h>
 #include <ctype.h>
 #include <vector>
@@ -14,13 +16,18 @@ class FontResource : public Resource {
         void * get_data();
         void free_data();
         DrawableGroup * string_to_drawables(std::string str, int x, int y);
+        TextureZoneResource * get_char_texture_zone(char c);
+        int get_min_char();
+        int get_max_char();
     protected:
+        int min_char;
+        int max_char;
         uint8_t char_size;
         uint8_t cell_size;
         uint8_t inter_char_size;
         TextureResource * font_texture;
         SDL_Renderer * renderer;
-        std::vector<TextureRect> tex_rec_vec;
+        std::vector<TextureZoneResource> font_texture_zones;
         
     private:
 };

@@ -21,7 +21,7 @@ void TextureZoneResource::free_data() {
 }
 
 SDL_Rect * TextureZoneResource::get_src_rect() {
-    return this->src_rect;
+    return &this->src_rect;
 }
 
 
