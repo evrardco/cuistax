@@ -19,6 +19,9 @@ class FontResource : public Resource {
         TextureZoneResource * get_char_texture_zone(char c);
         int get_min_char();
         int get_max_char();
+        int get_char_size();
+        int get_cell_size();
+        TextureZoneResource * get_char(char c);
     protected:
         int min_char;
         int max_char;

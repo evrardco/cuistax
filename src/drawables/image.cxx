@@ -33,3 +33,10 @@ void Image::draw(SDL_Renderer * renderer) {
         this->texture_zone->get_src_rect, this->dest_rect
     );
 }
+
+void Image::set_texture_zone(TextureZoneResource * tex_zone) {
+    this->texture_zone = tex_zone;
+}
+TextureZoneResource * Image::get_texture_zone() {
+    return this->texture_zone;
+}

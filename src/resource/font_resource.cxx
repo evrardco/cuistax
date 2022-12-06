@@ -93,3 +93,15 @@ TextureZoneResource * FontResource::get_char_texture_zone(char c) {
     return &this->font_texture_zones.at(idx);
 
 }
+
+int FontResource::get_char_size() {
+    return this->char_size;
+}
+
+int FontResource::get_cell_size() {
+    return this->cell_size;
+}
+
+TextureZoneResource * FontResource::get_char(char c) {
+    return &this->font_texture_zones.at(c);
+}

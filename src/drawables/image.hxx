@@ -7,6 +7,8 @@ class Image : public Drawable {
         void draw(SDL_Renderer * renderer);
         int get_width();
         int get_height();
+        void set_texture_zone(TextureZoneResource * tex_zone);
+        TextureZoneResource * get_texture_zone();
     
     protected:    
         TextureZoneResource * texture_zone; 
