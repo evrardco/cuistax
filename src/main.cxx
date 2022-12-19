@@ -13,8 +13,10 @@
 #include "utils/drawables/TextureRect.hxx"
 #include "utils/drawables/DrawableGroup.hxx"
 #include "entities/sprite.hxx"
+#include "drawables/string_image.hxx"
 #include <cmath>
 #include <cstdlib>
+#include "utils/debug.hxx"
 /* Sets constants */
 
 #define DELAY 3000
@@ -28,7 +30,8 @@ int main (int argc, char **argv)
     fprintf(stderr, "SDL failed to initialise: %s\n", SDL_GetError());
     return 1;
   }
-
+  YAE_LOG("Loaded SDL");
+  
   window = SDL_CreateWindow("SDL Example", /* Title of the SDL window */
 			    SDL_WINDOWPOS_UNDEFINED, /* Position x of the window */
 			    SDL_WINDOWPOS_UNDEFINED, /* Position y of the window */
@@ -50,10 +53,9 @@ int main (int argc, char **argv)
   resources->add_and_load("zigFont", new FontResource(
     renderer, (TextureResource *)resources->get("zigTexture"), 16, 18, 4
   ));
-  printf("Done loading font\n");
+  YAE_LOG("Done loading font\n");
   uint32_t frame_time = (int)(1000.0f / TARGET_FPS);
   bool keep_window_open = true;
-
 
   timeval t0, t1;
   double dt = 0;
@@ -62,13 +64,13 @@ int main (int argc, char **argv)
   uint32_t delay_time;
   SDL_Event e;
 
+
   DrawableGroup root;
-  
   root.push_back(
-    ((FontResource *)resources->get("zigFont"))->string_to_drawables("Hello world !", WIDTH/2, HEIGHT/2)
+    new StringImage(((FontResource *)resources->get("zigFont")), "Hello world !", 100, 100)
   );
   
-
+  printf("before");
 
   gettimeofday(&t0, NULL);
   while(keep_window_open) {
@@ -110,15 +112,13 @@ int main (int argc, char **argv)
 
   }
 
-
-
-
-
   /* Frees memory */
   delete resources;
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
-
+  for (auto elem : root) {
+    delete elem;
+  }
   
   /* Shuts down all SDL subsystems */
   SDL_Quit(); 

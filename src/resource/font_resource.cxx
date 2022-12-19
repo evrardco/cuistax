@@ -1,4 +1,3 @@
-#pragma once
 #include "font_resource.hxx"
 #include "../base/resource.hxx"
 #include "../entities/sprite.hxx"
@@ -9,6 +8,7 @@
 #include <ctype.h>
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 FontResource::FontResource(SDL_Renderer * renderer, TextureResource * texture, uint8_t char_size, uint8_t cell_size, uint8_t inter_char_size) {
     this->cell_size = cell_size;
@@ -18,6 +18,7 @@ FontResource::FontResource(SDL_Renderer * renderer, TextureResource * texture, u
 }
 
 void FontResource::load() {
+    if (!this->font_texture->is_loaded()) throw std::invalid_argument("cannot instantiate FontResource with unloaded TextureResource");
 
     if (loaded) {
         printf("Resource already loaded !\n");

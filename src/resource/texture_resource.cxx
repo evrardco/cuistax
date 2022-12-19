@@ -1,5 +1,7 @@
 #include "texture_resource.hxx"
 #include <cstring>
+#include <stdexcept>
+#include "../utils/formatting.hxx"
 TextureResource::TextureResource(const char * path, SDL_Renderer * renderer) {
     size_t sz = strlen(path) + 1;
     this->path = new char[sz];
@@ -24,7 +26,9 @@ int TextureResource::get_height() {
 void TextureResource::load() {
     this->surface = SDL_LoadBMP(this->path);
     if (this->surface == NULL) {
-        printf("Error loading bmp: %s\n", this->path);
+        std::string out;
+        str_fmt(out, "Error loading bmp: %s\n", this->path);
+        throw std::invalid_argument(out);
     }
     this->texture = SDL_CreateTextureFromSurface(this->renderer, this->surface);
     this->loaded = true;

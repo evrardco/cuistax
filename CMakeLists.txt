@@ -31,7 +31,7 @@ file(GLOB SOURCES
 
 
 add_executable(main src/main.cxx ${SOURCES})
-
+set_property(TARGET main PROPERTY CXX_STANDARD 20)
 target_link_libraries(main ${SDL2_LIBRARIES})
 set(RESOURCE_DIR "resources")
 configure_file(${RESOURCE_DIR}/graphics/fonts/zig_green_size16_cell18.bmp ${RESOURCE_DIR}/graphics/fonts/zig_green_size16_cell18.bmp COPYONLY)
