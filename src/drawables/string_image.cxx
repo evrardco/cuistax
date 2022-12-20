@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "../resource/font_resource.hxx"
+#include "../utils/debug.hxx"
 using namespace std;
 
 
@@ -20,7 +21,7 @@ StringImage::StringImage(FontResource * font, string text, int x, int y) {
             continue;
         }
         this->char_images.push_back(
-            Image(
+            new Image(
                 this->font->get_char(text.at(i)),
                 x + n_cols * cell_size, y + n_lines * cell_size  
             )
@@ -28,17 +29,24 @@ StringImage::StringImage(FontResource * font, string text, int x, int y) {
         n_cols += 1;
     }
 }
-void StringImage::draw(SDL_Renderer * renderer) {
-    for (auto &img : this->char_images) {
-        img.draw(renderer);
+StringImage::~StringImage() {
+    for (auto img : this->char_images) {
+        delete img;
     }
+}
+void StringImage::draw(SDL_Renderer * renderer) {
+    for (auto img : this->char_images) {
+        YAE_LOG("drawing Image at (x,y)=(%.2f,%.2f) with dims=(%dx%d)\n", img->get_x(), img->get_y(), img->get_width(), img->get_height());
+        img->draw(renderer);
+    }
+    YAE_LOG("Done drawing.\n\n");
 }
 void StringImage::set_x(int x) {
     int delta = x - this->x;
     this->x = x;
     for (int i = 0; i < this->text.size(); i++) {
-        Image img = this->char_images.at(i);
-        img.set_x(img.get_x() + delta);
+        Image * img = this->char_images.at(i);
+        img->set_x(img->get_x() + delta);
     }
 }
 
@@ -46,12 +54,12 @@ void StringImage::set_y(int y) {
     int delta = y - this->y;
     this->y = y;
     for (int i = 0; i < this->text.size(); i++) {
-        Image img = this->char_images.at(i);
-        img.set_y(img.get_y() + delta);
+        Image * img = this->char_images.at(i);
+        img->set_y(img->get_y() + delta);
     }
 }
 
 void StringImage::set_char(int idx, char c) {
-    this->char_images.at(x).set_texture_zone(this->font->get_char(c));
+    this->char_images.at(x)->set_texture_zone(this->font->get_char(c));
 }
 

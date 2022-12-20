@@ -17,6 +17,12 @@ FontResource::FontResource(SDL_Renderer * renderer, TextureResource * texture, u
     this->renderer = renderer;
 }
 
+FontResource::~FontResource() {
+    for (auto tex_zone : this->font_texture_zones) {
+        delete tex_zone;
+    }
+}
+
 void FontResource::load() {
     if (!this->font_texture->is_loaded()) throw std::invalid_argument("cannot instantiate FontResource with unloaded TextureResource");
 
@@ -33,11 +39,10 @@ void FontResource::load() {
     size_t num_cols = font_texture->get_width() / cell_size;
     this->min_char = 0;
     this->max_char =  num_rows * num_cols;
-    //TextureRect(SDL_Texture * texture, int x, int y, int w, int h)
     for (int i = 0; i < num_rows; i++) {
         for (int j = 0; j < num_cols; j++) {
             this->font_texture_zones.push_back(
-                TextureZoneResource(this->font_texture, j * this->cell_size,
+                new TextureZoneResource(this->font_texture, j * this->cell_size,
                 i * this->cell_size, this->char_size, this->char_size)
             );
         }
@@ -91,7 +96,7 @@ TextureZoneResource * FontResource::get_char_texture_zone(char c) {
     int idx = (int)c;
     if (c < min_char || c >= max_char) return NULL;
 
-    return &this->font_texture_zones.at(idx);
+    return this->font_texture_zones.at(idx);
 
 }
 
@@ -104,5 +109,5 @@ int FontResource::get_cell_size() {
 }
 
 TextureZoneResource * FontResource::get_char(char c) {
-    return &this->font_texture_zones.at(c);
+    return this->font_texture_zones.at(c);
 }

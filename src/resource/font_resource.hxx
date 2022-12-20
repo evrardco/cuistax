@@ -12,6 +12,7 @@
 class FontResource : public Resource {
     public:
         FontResource(SDL_Renderer * renderer, TextureResource * texture, uint8_t char_size, uint8_t cell_size, uint8_t inter_char_size);
+        ~FontResource();
         void load();
         void * get_data();
         void free_data();
@@ -30,7 +31,7 @@ class FontResource : public Resource {
         uint8_t inter_char_size;
         TextureResource * font_texture;
         SDL_Renderer * renderer;
-        std::vector<TextureZoneResource> font_texture_zones;
+        std::vector<TextureZoneResource *> font_texture_zones;
         
     private:
 };
