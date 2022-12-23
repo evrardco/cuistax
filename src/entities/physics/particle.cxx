@@ -16,9 +16,6 @@ double Particle::dist(Particle other) {
     );
 }
 void Particle::apply_gravity (Particle other, double dt) {
-    double oldvx = this->vx;
-    double oldvy = this->vy;
-
     double r = this->dist(other);
     double accel_mul = other.get_mass() * UNIVERSAL_CONSTANT / (pow(r, 2) + 1);
     accel_mul += pow(other.get_mass(), r);
@@ -28,9 +25,7 @@ void Particle::apply_gravity (Particle other, double dt) {
     this->vx += dx * accel_mul * dt; 
     this->vy += dy * accel_mul * dt; 
     other.set_vx(other.get_vx() - dx * accel_mul * dt);
-    other.set_vy(other.get_vy() - dy * accel_mul * dt);
-    
-    //printf("dvx=%d, dvy=%d\n", this->vx - oldvx, this->vy - oldvy);
+    other.set_vy(other.get_vy() - dy * accel_mul * dt);    
 }
 void Particle::step(double dt) {
     for (int i = this->id; i < (this->universe)->size(); i++) {

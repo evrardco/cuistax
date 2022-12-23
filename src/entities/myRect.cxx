@@ -27,4 +27,6 @@ MyRect::MyRect(double x, double y, int w, int h) {
     this->y = y;
     this->rect.w = w;
     this->rect.h = h;
+    this->vy = 0;
+    this->vx = 0;
 }

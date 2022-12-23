@@ -4,7 +4,7 @@ enum timer_type {ONCE, REPEAT};
 class Timer : public Dynamic {
     public: 
         Timer(double, std::function<void(void)>, timer_type, bool);
-        void step(double);
+        void step(double) override;
     protected:
         std::function<void(void)> callback;
         double interval;

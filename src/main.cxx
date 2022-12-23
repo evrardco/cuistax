@@ -10,7 +10,6 @@
 #include "resource/resource_manager.hxx"
 #include "resource/texture_resource.hxx"
 #include "resource/font_resource.hxx"
-#include "utils/drawables/TextureRect.hxx"
 #include "utils/drawables/DrawableGroup.hxx"
 #include "entities/sprite.hxx"
 #include "drawables/string_image.hxx"

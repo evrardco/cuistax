@@ -8,8 +8,8 @@
 class Particle : public Box {
     public:
         Particle(double, double, int, int, std::vector<Particle *> *, int);
-        void step(double);
-        void draw(SDL_Renderer *);
+        void step(double) override;
+        void draw(SDL_Renderer *) override;
         void apply_gravity(Particle, double);
         void set_max_vel(double);
         double get_vel();

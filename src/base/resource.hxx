@@ -8,7 +8,7 @@ class Resource {
 
     protected:
         bool loaded = false;
-        void * data;
-        char * path;
+        void * data = nullptr;
+        char * path = nullptr;
     private:
 };

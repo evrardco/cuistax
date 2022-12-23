@@ -44,3 +44,9 @@ int TextureZoneResource::get_height() {
     return this->texture_res->get_height();
 }
 
+void TextureZoneResource::draw_to(SDL_Renderer * renderer, SDL_Rect * dest_rect) {
+    SDL_RenderCopy(
+        renderer, ((SDL_Texture * )this->texture_res->get_data()),
+        &this->texture_zone.zone, dest_rect
+    );
+}

@@ -5,6 +5,8 @@ Timer::Timer(double interval, std::function<void(void)> callback, timer_type typ
     this->time_left = interval;
     this->activated = activated;
     this->type = type;
+    this->vx = 0;
+    this->vy = 0;
 }
 
 void Timer::step(double dt) {

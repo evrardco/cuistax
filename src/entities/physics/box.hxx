@@ -7,7 +7,7 @@ class Box : public MyRect {
         void worldCollide(double, double);
         bool isCollidingWith(Box other);
         void resolveCollision(Box other);
-        void step(double);
+        void step(double)  override;
 
     protected:
 

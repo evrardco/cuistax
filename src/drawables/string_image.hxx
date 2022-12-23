@@ -9,7 +9,7 @@ class StringImage : public Drawable {
         ~StringImage();
         void set_x(int x);
         void set_y(int y);
-        void draw(SDL_Renderer *);
+        void draw(SDL_Renderer *) override;
         void set_char(int idx, char c);
     protected:
         FontResource * font;

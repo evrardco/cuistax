@@ -2,7 +2,6 @@
 #include "../base/resource.hxx"
 #include "../entities/sprite.hxx"
 #include "../resource/texture_resource.hxx"
-#include "../utils/drawables/TextureRect.hxx"
 #include "../utils/drawables/DrawableGroup.hxx"
 #include <SDL2/SDL.h>
 #include <ctype.h>
@@ -15,6 +14,11 @@ FontResource::FontResource(SDL_Renderer * renderer, TextureResource * texture, u
     this->char_size = char_size;
     this->font_texture = texture;
     this->renderer = renderer;
+    this->min_char = 0;
+    this->max_char = UINT8_MAX;
+    this->inter_char_size = inter_char_size;
+    
+
 }
 
 FontResource::~FontResource() {
@@ -60,28 +64,6 @@ void FontResource::free_data() {
 
 void * FontResource::get_data() {
     return &this->font_texture_zones;
-}
-/**
- * @brief Allocates a DrawableGroup
- * 
- * @param str 
- * @param x 
- * @param y 
- * @return DrawableGroup * 
- */
-DrawableGroup * FontResource::string_to_drawables(std::string str, int x, int y) {
-    int n = str.size();
-    const char * cstr = str.c_str();
-    DrawableGroup * ret = new DrawableGroup();
-    for (int i = 0; i < n; i++) {
-        ret->push_back(
-            new Sprite(
-                x + i * this->cell_size, y,
-                &((std::vector<TextureRect> *)(this->get_data()))->at((int)cstr[i])
-            )
-        );
-    }
-    return ret;
 }
 
 int FontResource::get_min_char() {

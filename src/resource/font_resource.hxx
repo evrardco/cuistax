@@ -1,7 +1,6 @@
 #pragma once
 #include "../base/resource.hxx"
 #include "../resource/texture_resource.hxx"
-#include "../utils/drawables/TextureRect.hxx"
 #include "../utils/drawables/DrawableGroup.hxx"
 #include "../drawables/image.hxx"
 #include "../resource/texture_zone_resource.hxx"
@@ -13,10 +12,9 @@ class FontResource : public Resource {
     public:
         FontResource(SDL_Renderer * renderer, TextureResource * texture, uint8_t char_size, uint8_t cell_size, uint8_t inter_char_size);
         ~FontResource();
-        void load();
-        void * get_data();
-        void free_data();
-        DrawableGroup * string_to_drawables(std::string str, int x, int y);
+        void load() override;
+        void * get_data() override;
+        void free_data() override;
         TextureZoneResource * get_char_texture_zone(char c);
         int get_min_char();
         int get_max_char();
