@@ -1,6 +1,7 @@
 #pragma once
+#include <stdio.h>
 #ifndef YAE_DEBUG_LEVEL
-#define YAE_DEBUG_LEVEL 0
+#define YAE_DEBUG_LEVEL 3
 #endif
 #ifdef YAE_DISABLE_LOG
 #define YAE_LOG(fmt_str, ...) ;

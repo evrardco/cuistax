@@ -2,6 +2,7 @@
 #include <cstring>
 #include <stdexcept>
 #include "../utils/formatting.hxx"
+#include "../utils/debug.hxx"
 TextureResource::TextureResource(const char * path, SDL_Renderer * renderer) {
     size_t sz = strlen(path) + 1;
     this->path = new char[sz];
@@ -40,6 +41,7 @@ void TextureResource::free_data() {
 }
 
 TextureResource::~TextureResource() {
+    YAE_LOG("Calling texture font destructor");
     this->free_data();
     delete this->path;
 }

@@ -33,15 +33,15 @@ void TextureZoneResource::load() {
 }
 
 SDL_Rect * TextureZoneResource::get_src_rect() {
-    return &this->src_rect;
+    return &this->texture_zone.zone;
 }
 
 int TextureZoneResource::get_width() {
-    return this->texture_res->get_width();
+    return this->texture_zone.zone.w;
 }
 
 int TextureZoneResource::get_height() {
-    return this->texture_res->get_height();
+    return this->texture_zone.zone.h;
 }
 
 void TextureZoneResource::draw_to(SDL_Renderer * renderer, SDL_Rect * dest_rect) {
