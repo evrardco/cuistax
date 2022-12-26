@@ -4,8 +4,3 @@ void DrawableGroup::draw(SDL_Renderer * renderer) {
         (*d)->draw(renderer);
     }
 }
-DrawableGroup::~DrawableGroup() {
-    for (auto d = this->begin(); d != this->end(); d++) {
-        delete *d;
-    }
-}

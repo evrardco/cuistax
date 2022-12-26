@@ -36,6 +36,7 @@ void TextureResource::load() {
 }
 
 void TextureResource::free_data() {
+    YAE_LOG("Freeing SDL_TEXTURE from texture resource");
     SDL_FreeSurface(this->surface);
     SDL_DestroyTexture(this->texture);
 }
@@ -43,7 +44,7 @@ void TextureResource::free_data() {
 TextureResource::~TextureResource() {
     YAE_LOG("Calling texture font destructor");
     this->free_data();
-    delete this->path;
+    delete[] this->path;
 }
 
 

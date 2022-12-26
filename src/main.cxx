@@ -65,8 +65,9 @@ int main (int argc, char **argv)
 
 
   DrawableGroup root;
+  StringImage text(((FontResource *)resources->get("zigFont")), "Hello world !", 100, 100);
   root.push_back(
-    new StringImage(((FontResource *)resources->get("zigFont")), "Hello world !", 100, 100)
+    &text
   );
   
   printf("before");

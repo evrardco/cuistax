@@ -19,7 +19,14 @@ class TextureZoneResource : public Resource {
         SDL_Rect * get_src_rect();
     protected:
         void load() override;
-        texture_zone_t texture_zone;
-        SDL_Rect src_rect;
+        texture_zone_t texture_zone = {
+            .zone = {                               
+                        .x = 0,
+                        .y = 0,
+                        .w = 0,
+                        .h = 0                          
+                    },
+            .texture = nullptr 
+        };
         TextureResource * texture_res;
 };
