@@ -9,25 +9,14 @@ using namespace std;
 StringImage::StringImage(FontResource * font, string text, int x, int y) {
     this->x = x;
     this->y = y;
-    this->text = text;
     this->font = font;
-    int n_lines = 0;
-    int n_cols = text.size();
-    int cell_size = font->get_cell_size();
+    this->n_lines = 0;
+    this->n_cols = 0;
+    this->cell_size = font->get_cell_size();
     for (int i = 0; i < text.size(); i++) {
-        if (text.at(i) == '\n') {
-            n_lines += 1;
-            n_cols = 0;
-            continue;
-        }
-        this->char_images.push_back(
-            new Image(
-                this->font->get_char(text.at(i)),
-                x + n_cols * cell_size, y + n_lines * cell_size  
-            )
-        );
-        n_cols += 1;
+        this->add_char(text.at(i));
     }
+    
 }
 StringImage::~StringImage() {
     for (auto img : this->char_images) {
@@ -36,10 +25,8 @@ StringImage::~StringImage() {
 }
 void StringImage::draw(SDL_Renderer * renderer) {
     for (auto img : this->char_images) {
-        YAE_LOG("drawing Image at (x,y)=(%.2f,%.2f) with dims=(%dx%d)\n", img->get_x(), img->get_y(), img->get_width(), img->get_height());
         img->draw(renderer);
     }
-    YAE_LOG("Done drawing.\n\n");
 }
 void StringImage::set_x(int x) {
     int delta = x - this->x;
@@ -61,5 +48,30 @@ void StringImage::set_y(int y) {
 
 void StringImage::set_char(int idx, char c) {
     this->char_images.at(x)->set_texture_zone(this->font->get_char(c));
+}
+
+size_t StringImage::size() {
+    return this->char_images.size();
+}
+void StringImage::add_char(char c) {
+    if (c == '\n') {
+            n_lines += 1;
+            n_cols = 0;
+    } else {
+        this->char_images.push_back(
+            new Image(
+                font->get_char(c),
+                x + n_cols * cell_size, y + n_lines * cell_size  
+            )
+        );
+        n_cols += 1;
+    }
+    
+    text.push_back(c);
+    
+}
+
+void StringImage::set_string(string str) {
+
 }
 

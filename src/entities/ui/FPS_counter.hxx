@@ -2,7 +2,7 @@
 #include "../../base/dynamic.hxx"
 class FPSCounter : public Dynamic, public Drawable {
     public:
-        FPSCounter(int x, int y, const char * format);
+        FPSCounter(int x, int y);
         ~FPSCounter();
         void step(double dt) override;
         void draw(SDL_Renderer * renderer) override;
@@ -10,5 +10,6 @@ class FPSCounter : public Dynamic, public Drawable {
         double counter = 0.0;
         uint32_t frame_count = 0;
         StringImage * fps_text = NULL;
+        StringImage * fps_number = NULL;
     private:
 };
