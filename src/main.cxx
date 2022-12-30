@@ -66,6 +66,8 @@ int main (int argc, char **argv)
 
   DrawableGroup root;
   StringImage text(((FontResource *)resources->get("zigFont")), "Hello world ! \nI'm a really cool text ! \n:D", 100, 100);
+  text.set_string("bonjour :)");
+  text.set_string("bonjour :) tout le monde :D !");
   root.push_back(
     &text
   );

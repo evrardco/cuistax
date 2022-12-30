@@ -47,15 +47,18 @@ void StringImage::set_y(int y) {
 }
 
 void StringImage::set_char(int idx, char c) {
-    this->char_images.at(x)->set_texture_zone(this->font->get_char(c));
+    this->char_images.at(idx)->set_texture_zone(this->font->get_char(c));
+    this->text.at(idx) = c;
 }
 
 size_t StringImage::size() {
     return this->char_images.size();
 }
+
 void StringImage::add_char(char c) {
     if (c == '\n') {
             n_lines += 1;
+            line_lengths.push_back(n_cols);
             n_cols = 0;
     } else {
         this->char_images.push_back(
@@ -71,7 +74,37 @@ void StringImage::add_char(char c) {
     
 }
 
-void StringImage::set_string(string str) {
+void StringImage::strip(size_t n_chars) {
+    for (size_t i = 0; i < n_chars; i++) {
+        char c = text.at(text.size() - 1);
+        if (c == '\n') {
+            n_lines -= 1;
+            n_cols = line_lengths.at(line_lengths.size() - 1);
+            line_lengths.erase(line_lengths.end() - 1);
+        } else {
+            n_cols -= 1;    
+            delete char_images.at(char_images.size() - 1);
+            char_images.erase(char_images.end() - 1);
+        } 
+        text.erase(text.end() - 1);
+    }
+}
 
+void StringImage::set_string(string new_str) {
+    YAE_DEBUG("new_str length=%d, text length=%d", new_str.length(), text.length());
+    int delta = new_str.length() - text.length();
+    int abs_delta = delta < 0 ? -delta : delta;
+    int replace_idx = delta > 0 ? text.length() : new_str.length();
+    if (delta < 0) {
+        strip(abs_delta);
+    }
+    for (int i = 0; i < replace_idx; i++) {
+        set_char(i, new_str.at(i));
+    } 
+    if (delta > 0) {
+        for (int i = replace_idx; i < new_str.length(); i++) {
+            add_char(new_str.at(i));
+        }
+    }
 }
 

@@ -91,5 +91,8 @@ int FontResource::get_cell_size() {
 }
 
 TextureZoneResource * FontResource::get_char(char c) {
+    if (c > max_char || c < min_char) {
+        throw std::invalid_argument("could not find char in font");
+    }
     return this->font_texture_zones.at(c);
 }

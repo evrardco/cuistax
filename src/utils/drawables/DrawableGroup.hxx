@@ -4,6 +4,5 @@
 class DrawableGroup : public std::vector<Drawable *>, public Drawable {
     public:
      void draw(SDL_Renderer * renderer) override;
-    ~DrawableGroup();
     private:
 };
