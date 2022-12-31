@@ -1,3 +1,4 @@
+#pragma once
 #include "image.hxx"
 #include <string>
 #include <vector>
@@ -12,6 +13,8 @@ class StringImage : public Drawable {
         void draw(SDL_Renderer *) override;
         void set_char(int idx, char c);
         void set_string(std::string str);
+        uint16_t get_width();
+        uint16_t get_height();
         size_t size();
     protected:
         FontResource * font;

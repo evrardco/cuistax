@@ -6,6 +6,7 @@ class Dynamic {
         virtual double get_vy();
         virtual void set_vx(double);
         virtual void set_vy(double);
+        virtual ~Dynamic() {};
 
     protected:
         double vx;

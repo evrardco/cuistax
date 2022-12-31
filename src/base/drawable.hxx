@@ -37,6 +37,7 @@ class Drawable {
          * @param y which value to set y to.
          */
         virtual void set_y(double y);
+        virtual ~Drawable() {};
     protected:
         /**
          * @brief x position on the window.

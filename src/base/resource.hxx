@@ -5,6 +5,7 @@ class Resource {
         virtual void * get_data();
         virtual bool is_loaded();
         virtual void free_data() = 0;
+        virtual ~Resource() {};
 
     protected:
         bool loaded = false;

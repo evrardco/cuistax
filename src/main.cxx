@@ -7,6 +7,7 @@
 #include "utils/timer.hxx"
 #include "entities/physics/box.hxx"
 #include "entities/physics/particle.hxx"
+#include "entities/ui/FPS_counter.hxx"
 #include "resource/resource_manager.hxx"
 #include "resource/texture_resource.hxx"
 #include "resource/font_resource.hxx"
@@ -47,11 +48,11 @@ int main (int argc, char **argv)
    * Loading assets
    */
   ResourceManager * resources = new ResourceManager();
-  resources->add_and_load("zigTexture", new TextureResource("resources/graphics/fonts/zig_green_size16_cell18.bmp", renderer), TEXTURE_RESOURCE);
+  resources->add_and_load("zigTexture", new TextureResource("resources/graphics/fonts/zig_green_size16_cell18.bmp", renderer));
   //FontResource(SDL_Renderer * renderer, TextureResource * texture, uint8_t char_size, uint8_t cell_size, uint8_t inter_char_size)
   resources->add_and_load("zigFont", new FontResource(
     renderer, (TextureResource *)resources->get("zigTexture"), 16, 18, 4
-  ), FONT_RESOURCE);
+  ));
   YAE_LOG("Done loading font\n");
   uint32_t frame_time = (int)(1000.0f / TARGET_FPS);
   bool keep_window_open = true;
@@ -64,14 +65,11 @@ int main (int argc, char **argv)
   SDL_Event e;
 
 
-  DrawableGroup root;
-  StringImage text(((FontResource *)resources->get("zigFont")), "Hello world ! \nI'm a really cool text ! \n:D", 100, 100);
-  text.set_string("bonjour :)");
-  text.set_string("bonjour :) tout le monde :D !");
-  root.push_back(
-    &text
-  );
+  std::vector<Entity *> root;
   
+  root.push_back(
+    new FPSCounter(10, 10, 4, (FontResource *)resources->get("zigFont"), 0.2)
+  );
   printf("before");
 
   gettimeofday(&t0, NULL);
@@ -93,13 +91,18 @@ int main (int argc, char **argv)
                   
           }
       }
-      //root.step(dt);
+      for (auto entity : root) {
+        entity->step(dt);
+      }
+      
 
 
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       SDL_RenderClear(renderer);
 
-      root.draw(renderer);
+      for (auto entity : root) {
+        entity->draw(renderer);
+      }
       SDL_RenderPresent(renderer);
 
       
@@ -109,9 +112,12 @@ int main (int argc, char **argv)
       t0 = t1;
       dt_millis = (int)(dt * 1000);
       if (frame_time > dt_millis) {
-        SDL_Delay(frame_time - dt_millis);
+        //SDL_Delay(frame_time - dt_millis);
       }
 
+  }
+  for (auto entity : root) {
+    delete entity;
   }
 
   /* Frees memory */

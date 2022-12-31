@@ -3,6 +3,7 @@
 #include <vector>
 #include "../resource/font_resource.hxx"
 #include "../utils/debug.hxx"
+#include <algorithm>
 using namespace std;
 
 
@@ -10,7 +11,7 @@ StringImage::StringImage(FontResource * font, string text, int x, int y) {
     this->x = x;
     this->y = y;
     this->font = font;
-    this->n_lines = 0;
+    this->n_lines = 1;
     this->n_cols = 0;
     this->cell_size = font->get_cell_size();
     for (int i = 0; i < text.size(); i++) {
@@ -108,3 +109,12 @@ void StringImage::set_string(string new_str) {
     }
 }
 
+uint16_t StringImage::get_width() {
+    auto max = max_element(line_lengths.begin(), line_lengths.end());
+    
+    return max != line_lengths.end() ? (* max) * cell_size : n_cols * cell_size;
+}
+
+uint16_t StringImage::get_height() {
+    return n_cols * cell_size;
+}
