@@ -92,7 +92,7 @@ void StringImage::strip(size_t n_chars) {
 }
 
 void StringImage::set_string(string new_str) {
-    YAE_DEBUG("new_str length=%d, text length=%d", new_str.length(), text.length());
+    CUISTAX_DEBUG("new_str length=%d, text length=%d", new_str.length(), text.length());
     int delta = new_str.length() - text.length();
     int abs_delta = delta < 0 ? -delta : delta;
     int replace_idx = delta > 0 ? text.length() : new_str.length();

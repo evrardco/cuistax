@@ -22,7 +22,7 @@ FPSCounter::FPSCounter(int x, int y, size_t n_digits, FontResource * font, doubl
 }
 
 FPSCounter::~FPSCounter() {
-    YAE_DEBUG("Calling FPSCounter destructor");
+    CUISTAX_DEBUG("Calling FPSCounter destructor");
     delete fps_text;
     delete fps_number;
 }

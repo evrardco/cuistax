@@ -30,7 +30,7 @@ int main (int argc, char **argv)
     fprintf(stderr, "SDL failed to initialise: %s\n", SDL_GetError());
     return 1;
   }
-  YAE_LOG("Loaded SDL");
+  CUISTAX_LOG("Loaded SDL");
   
   window = SDL_CreateWindow("SDL Example", /* Title of the SDL window */
 			    SDL_WINDOWPOS_UNDEFINED, /* Position x of the window */
@@ -53,7 +53,7 @@ int main (int argc, char **argv)
   resources->add_and_load("zigFont", new FontResource(
     renderer, (TextureResource *)resources->get("zigTexture"), 16, 18, 4
   ));
-  YAE_LOG("Done loading font\n");
+  CUISTAX_LOG("Done loading font\n");
   uint32_t frame_time = (int)(1000.0f / TARGET_FPS);
   bool keep_window_open = true;
 
