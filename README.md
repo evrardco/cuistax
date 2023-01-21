@@ -29,6 +29,6 @@ Run the main executable
 ./main
 ```
 I managed to build it on Windows with no adaptation needed using MSYS2's packages.
-But please, do not harm yourself and do C/C++ development on Windows.
+But please, do not harm yourself by doing C/C++ development on Windows.
 
 
