@@ -16,5 +16,5 @@ class ResourceManager {
     protected:
 
     private:
-        std::unordered_map<const char *, Resource *> cache;
+        std::unordered_map<const char *, std::pair<Resource *, resource_type>> cache;
 };
