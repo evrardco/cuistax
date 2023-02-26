@@ -1,5 +1,5 @@
 #include "resource_manager.hxx"
-#include "../utils/debug.hxx"
+#include "../cuistax/cui_debug.hxx"
 #include "texture_resource.hxx"
 #include "texture_zone_resource.hxx"
 #include "font_resource.hxx"

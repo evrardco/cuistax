@@ -16,7 +16,7 @@
 #include "drawables/string_image.hxx"
 #include <cmath>
 #include <cstdlib>
-#include "utils/debug.hxx"
+#include "cuistax/cui_debug.hxx"
 /* Sets constants */
 
 #define DELAY 3000

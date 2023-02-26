@@ -1,6 +1,6 @@
 #include "FPS_counter.hxx"
 #include <stdexcept>
-#include "../../utils/debug.hxx"
+#include "../../cuistax/cui_debug.hxx"
 
 static char fps_buff[MAX_DIGITS];
 FPSCounter::FPSCounter(int x, int y, size_t n_digits, FontResource * font, double max_period) {

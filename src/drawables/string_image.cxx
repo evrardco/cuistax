@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include "../resource/font_resource.hxx"
-#include "../utils/debug.hxx"
+#include "../cuistax/cui_debug.hxx"
 #include <algorithm>
 using namespace std;
 
