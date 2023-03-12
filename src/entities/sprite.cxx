@@ -1,6 +1,6 @@
 #include "sprite.hxx"
 Sprite::Sprite(double x, double y, TextureZoneResource * texrec) {
-    this->texture_zone = texture_zone;
+    this->texture_zone = texrec;
     this->destination.x = x;
     this->destination.y = y;
     this->destination.w = texture_zone->get_width();
