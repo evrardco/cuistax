@@ -1,6 +1,8 @@
 #include "cuistax.hxx"
 #include "cui_errors.hxx"
 #include "cui_debug.hxx"
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_video.h>
 
 const char * cui_backend_str[] = {"Unknown", "SDL2"};
 
@@ -9,13 +11,30 @@ const char * cui_backend_to_str(cuistax_backend backend) {
     return cui_backend_str[backend];
 }
 
-void cui_free_SDL(cui_SDL_context_t *) {
-
+void cui_free_SDL(cui_SDL_context_t * ctx) {
+    CUISTAX_LOG("Destroying SDL backend");
+    SDL_DestroyWindow(ctx->window);
+    SDL_DestroyRenderer(ctx->renderer);
+    SDL_Quit();
 }
-cui_error_t cui_init(cui_context_t * ctx) {
+
+cui_error_t cui_free(cui_context_t * ctx) {
     switch (ctx->backend_type) {
         case CUI_BACKEND_SDL2: {
-            CUISTAX_LOG("Initializing backend: %s", cui_backend_to_str(ctx->backend_type));
+            cui_free_SDL((cui_SDL_context_t *)&ctx->backend_ctx);
+            return CUI_ERR_OK;
+        }
+        default: {
+            CUISTAX_ERR("Unknown backend: %s", cui_backend_to_str(ctx->backend_type));
+            return CUI_ERR_BACKEND_UNKNOWN;
+        }
+    }
+}
+cui_error_t cui_init(cui_context_t * ctx) {
+    CUISTAX_LOG("Initializing backend: %s", cui_backend_to_str(ctx->backend_type));
+    switch (ctx->backend_type) {
+        case CUI_BACKEND_SDL2: {
+        
             cui_SDL_context_t * sdl_ctx = (cui_SDL_context_t *)&ctx->backend_ctx;
 
             if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -24,7 +43,7 @@ cui_error_t cui_init(cui_context_t * ctx) {
             }
             CUISTAX_LOG("Loaded SDL");
             
-             sdl_ctx->window= SDL_CreateWindow(ctx->app_name, /* Title of the SDL window */
+            sdl_ctx->window= SDL_CreateWindow(ctx->app_name, /* Title of the SDL window */
                             SDL_WINDOWPOS_UNDEFINED, /* Position x of the window */
                             SDL_WINDOWPOS_UNDEFINED, /* Position y of the window */
                             ctx->width, /* Width of the window in pixels */

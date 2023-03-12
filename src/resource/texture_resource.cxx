@@ -2,7 +2,7 @@
 #include <cstring>
 #include <stdexcept>
 #include "../utils/formatting.hxx"
-#include "../utils/debug.hxx"
+#include "../cuistax/cui_debug.hxx"
 TextureResource::TextureResource(const char * path, SDL_Renderer * renderer) {
     size_t sz = strlen(path) + 1;
     this->path = new char[sz];

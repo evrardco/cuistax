@@ -8,19 +8,19 @@
 
 ResourceManager::~ResourceManager() {
     for (auto res : cache) {
-        delete res.first;
+        delete res.second;
     }
 }
-void ResourceManager::add(const char * name, Resource * resource, resource_type type) {
-        cache[name] = std::make_pair(resource, type);
+void ResourceManager::add(const char * name, Resource * resource) {
+        cache[name] = resource;
 }
 void ResourceManager::load(const char * name) {
-    cache[name].first->load();
+    cache[name]->load();
 }
 
-void ResourceManager::add_and_load(const char * name, Resource * resource, resource_type type) {
+void ResourceManager::add_and_load(const char * name, Resource * resource) {
     resource->load();
-    cache[name] = std::make_pair(resource, type);
+    cache[name] = resource;
 }
 
 void ResourceManager::remove(const char * name) {
@@ -28,7 +28,7 @@ void ResourceManager::remove(const char * name) {
 }
 
 Resource * ResourceManager::get(const char * name) {
-    return cache[name].first;
+    return cache[name]; 
 }
 
 int ResourceManager::get_size() {
@@ -36,5 +36,5 @@ int ResourceManager::get_size() {
 }
 
 void * ResourceManager::get_data(const char * name) {
-    return cache[name].first->get_data();
+    return cache[name]->get_data();
 }
