@@ -2,9 +2,11 @@
 
 void Scene::add_actor(Actor * to_add) {
     this->actors.emplace(to_add);
+    to_add->set_scene(this);
 }
 void Scene::remove_actor(Actor * to_remove) {
     this->actors.erase(to_remove);
+    to_remove->set_scene(nullptr);
 }
 
 void Scene::step(double dt) {
