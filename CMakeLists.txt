@@ -9,7 +9,7 @@ find_package(PkgConfig REQUIRED)
 pkg_search_module(SDL2 REQUIRED sdl2)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-file(GLOB SOURCES
+file(GLOB LIBCUISTAX_SOURCES
     src/base/*.hxx
     src/base/*.cxx
     src/drawables/*.cxx
@@ -30,9 +30,10 @@ file(GLOB SOURCES
     src/*.cxx
     src/*.hxx
 )
+add_library(cuistax STATIC ${LIBCUISTAX_SOURCES})
 
 
-add_executable(main src/main.cxx ${SOURCES})
+add_executable(main src/main.cxx ${LIBCUISTAX_SOURCES})
 set_property(TARGET main PROPERTY CXX_STANDARD 20)
 target_link_libraries(main ${SDL2_LIBRARIES})
 set(RESOURCE_DIR "resources")
