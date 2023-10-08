@@ -18,6 +18,7 @@ StringImage::StringImage(FontResource * font, string text, int x, int y) {
         this->add_char(text.at(i));
     }
     
+    
 }
 StringImage::~StringImage() {
     for (auto img : this->char_images) {
@@ -94,19 +95,18 @@ void StringImage::strip(size_t n_chars) {
 void StringImage::set_string(string new_str) {
     CUISTAX_DEBUG("new_str length=%d, text length=%d", new_str.length(), text.length());
     int delta = new_str.length() - text.length();
+    if (delta == 0 && new_str == text) return;
     int abs_delta = delta < 0 ? -delta : delta;
     int replace_idx = delta > 0 ? text.length() : new_str.length();
-    if (delta < 0) {
-        strip(abs_delta);
-    }
+    
+    strip((delta < 0 ) * abs_delta);
     for (int i = 0; i < replace_idx; i++) {
         set_char(i, new_str.at(i));
     } 
-    if (delta > 0) {
-        for (int i = replace_idx; i < new_str.length(); i++) {
-            add_char(new_str.at(i));
-        }
+    for (int i = replace_idx; i < new_str.length(); i++) {
+        add_char(new_str.at(i));
     }
+    
 }
 
 uint16_t StringImage::get_width() {

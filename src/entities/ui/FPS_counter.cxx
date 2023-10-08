@@ -28,17 +28,12 @@ FPSCounter::~FPSCounter() {
 }
 void FPSCounter::step(double dt) {
     counter += dt;
-    if (counter == max_period) {
+    if (counter >= max_period) {
         counter = 0.0;
         frame_count = 0;
     } else {
         sprintf(fps_buff, format_buff, (int)(frame_count/counter));
-        // fps_number->set_string(fps_buff);
-        // actually, below is faster, for god only knows what awful reason.
-        // I can't believe I spent so much time writing optimized string image routines...
-        delete fps_number;
-        fps_number = new StringImage(font, fps_buff, x + fps_text->get_width(), y);
-        
+        fps_number->set_string(fps_buff);
     }
 }
 
