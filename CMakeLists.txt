@@ -3,8 +3,14 @@ project(SDLTest)
 
 enable_language(CXX)
 set(CMAKE_CXX_COMPILER "g++")
-
-
+if(log_enabled)
+    add_definitions(-DCUISTAX_LOG)
+    message("Enabled logs")
+endif(log_enabled)
+if(log_level)
+    add_definitions("-DCUISTAX_LOG_LEVEL=${log_level}")
+    message("Enabled logs with log_level=${log_level}")
+endif(log_level)
 find_package(PkgConfig REQUIRED)
 pkg_search_module(SDL2 REQUIRED sdl2)
 include_directories(${SDL2_INCLUDE_DIRS})
