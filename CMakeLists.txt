@@ -30,6 +30,8 @@ file(GLOB LIBCUISTAX_SOURCES
     src/utils/*.cxx
     src/utils/drawables/*.hxx
     src/utils/drawables/*.cxx
+    src/flow/*.hxx
+    src/flow/*.cxx
     src/resource/*.hxx
     src/resource/*.cxx
     src/constants.hxx
