@@ -69,7 +69,7 @@ int main (int argc, char **argv)
   std::vector<Entity *> root;
   
   root.push_back(
-    new FPSCounter(10, 10, 4, (FontResource *)resources->get("zigFont"), 0.2)
+    new FPSCounter(10, 10, 4, (FontResource *)resources->get("zigFont"), 1.0)
   );
   printf("before");
 
