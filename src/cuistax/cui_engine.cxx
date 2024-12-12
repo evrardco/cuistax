@@ -13,8 +13,8 @@ const char * cui_backend_to_str(cuistax_backend backend) {
 
 void cui_free_SDL(cui_SDL_context_t * ctx) {
     CUISTAX_LOG("Destroying SDL backend");
-    SDL_DestroyWindow(ctx->window);
     SDL_DestroyRenderer(ctx->renderer);
+    SDL_DestroyWindow(ctx->window);
     SDL_Quit();
 }
 
@@ -30,8 +30,15 @@ cui_error_t cui_free(cui_context_t * ctx) {
         }
     }
 }
-cui_error_t cui_init(cui_context_t * ctx) {
+cui_error_t cui_init(
+    cui_context_t * ctx, int width, int height, const char * app_name
+    ) {
     CUISTAX_LOG("Initializing backend: %s", cui_backend_to_str(ctx->backend_type));
+    ctx->width = width;
+    ctx->height = height;    strncpy(ctx->app_name, app_name, MAX_APP_NAME_SIZE); //TODO Use strncpy
+
+    strncpy(ctx->app_name, app_name, MAX_APP_NAME_SIZE); //TODO Use strncpy
+
     switch (ctx->backend_type) {
         case CUI_BACKEND_SDL2: {
         
@@ -54,7 +61,12 @@ cui_error_t cui_init(cui_context_t * ctx) {
                 CUISTAX_ERR("SDL window failed to initialise: %s\n", SDL_GetError());
                 return CUI_ERR_SDL_WINDOW;
             }
-            SDL_Renderer * renderer = SDL_CreateRenderer(sdl_ctx->window, -1, SDL_RENDERER_ACCELERATED); 
+
+            sdl_ctx->renderer = SDL_CreateRenderer(sdl_ctx->window, -1, SDL_RENDERER_ACCELERATED); 
+            if (sdl_ctx->renderer == NULL) {
+                CUISTAX_ERR("SDL window failed to initialise: %s\n", SDL_GetError());
+                return CUI_ERR_SDL_WINDOW;  
+            }
             break;
         }
         default: {
@@ -62,4 +74,6 @@ cui_error_t cui_init(cui_context_t * ctx) {
             return CUI_ERR_BACKEND_UNKNOWN;
         }
     }
+
+    return CUI_ERR_OK;
 }

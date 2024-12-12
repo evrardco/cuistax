@@ -1,9 +1,7 @@
 #pragma once
 #include <stdio.h>
+
 #ifndef CUISTAX_LOG_LEVEL
-#define CUISTAX_LOG_LEVEL 4
-#endif
-#ifndef CUISTAX_LOG
     #define CUISTAX_ERR(fmt_str, ...) do {} while(0)
     #define CUISTAX_WARN(fmt_str, ...) do {} while(0)
     #define CUISTAX_LOG(fmt_str, ...) do {} while(0)
@@ -29,5 +27,4 @@
     #else
         #define CUISTAX_DEBUG(fmt_str, ...) do {} while(0)
     #endif
-    
 #endif

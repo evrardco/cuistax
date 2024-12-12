@@ -4,6 +4,7 @@
 #include "../utils/drawables/DrawableGroup.hxx"
 #include "../drawables/image.hxx"
 #include "../resource/texture_zone_resource.hxx"
+#include "../cuistax/cui_engine.hxx"
 #include <SDL2/SDL.h>
 #include <ctype.h>
 #include <vector>
@@ -11,6 +12,8 @@
 class FontResource : public Resource {
     public:
         FontResource(SDL_Renderer * renderer, TextureResource * texture, uint8_t char_size, uint8_t cell_size, uint8_t inter_char_size);
+        FontResource(cui_context_t * ctx, TextureResource * texture, uint8_t char_size, uint8_t cell_size, uint8_t inter_char_size);
+
         ~FontResource();
         void load() override;
         void * get_data() override;

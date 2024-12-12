@@ -17,9 +17,18 @@ FontResource::FontResource(SDL_Renderer * renderer, TextureResource * texture, u
     this->min_char = 0;
     this->max_char = UINT8_MAX;
     this->inter_char_size = inter_char_size;
-    
-
 }
+
+FontResource::FontResource(cui_context_t * ctx, TextureResource * texture, uint8_t char_size, uint8_t cell_size, uint8_t inter_char_size) {
+    this->cell_size = cell_size;
+    this->char_size = char_size;
+    this->font_texture = texture;
+    this->renderer = ctx->backend_ctx.ctx_SDL.renderer;
+    this->min_char = 0;
+    this->max_char = UINT8_MAX;
+    this->inter_char_size = inter_char_size;
+}
+
 
 FontResource::~FontResource() {
     for (auto tex_zone : this->font_texture_zones) {

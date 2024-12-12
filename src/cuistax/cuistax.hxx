@@ -6,3 +6,4 @@
 #include "cui_resource.hxx"
 #include "cui_utils.hxx"
 #include "cui_engine.hxx"
+#include "cui_flow.hxx"

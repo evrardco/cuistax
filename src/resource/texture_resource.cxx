@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include "../utils/formatting.hxx"
 #include "../cuistax/cui_debug.hxx"
+#include "../cuistax/cui_engine.hxx"
 TextureResource::TextureResource(const char * path, SDL_Renderer * renderer) {
     size_t sz = strlen(path) + 1;
     this->path = new char[sz];
@@ -10,6 +11,15 @@ TextureResource::TextureResource(const char * path, SDL_Renderer * renderer) {
     this->loaded = false;
     this->renderer = renderer;
 }
+
+TextureResource::TextureResource(const char * path, cui_context_t * ctx) {
+    size_t sz = strlen(path) + 1;
+    this->path = new char[sz];
+    strcpy(this->path, path);
+    this->loaded = false;
+    this->renderer = ctx->backend_ctx.ctx_SDL.renderer;
+}
+
 
 void * TextureResource::get_data() {
     return this->texture;

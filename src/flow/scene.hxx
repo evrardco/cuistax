@@ -1,9 +1,7 @@
 #pragma once
-#include "../base/entity.hxx"
 #include "../entities/actor.hxx"
-#include "../utils/drawables/DrawableGroup.hxx"
-#include "../utils/dynamics/DynamicGroup.hxx"
 #include <set>
+#include <vector>
 
 class Actor; //Forward declaration to avoid circular include problems   
 class Scene {
@@ -13,7 +11,7 @@ class Scene {
         void step(double dt);
         void draw(SDL_Renderer * renderer);
     protected:
-        std::set<Actor *> actors;
+        std::vector<Actor *> actors;
     private:
         
 };

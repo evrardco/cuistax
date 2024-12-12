@@ -93,7 +93,7 @@ void StringImage::strip(size_t n_chars) {
 }
 
 void StringImage::set_string(string new_str) {
-    CUISTAX_DEBUG("new_str length=%d, text length=%d", new_str.length(), text.length());
+    CUISTAX_DEBUG("new_str length=%ld, text length=%ld", new_str.length(), text.length());
     int delta = new_str.length() - text.length();
     if (delta == 0 && new_str == text) return;
     int abs_delta = delta < 0 ? -delta : delta;
