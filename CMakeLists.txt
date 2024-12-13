@@ -36,7 +36,8 @@ file(GLOB LIBCUISTAX_SOURCES
     src/*.hxx
     src/cuistax/*.cxx
     src/cuistax/*.hxx
-
+    src/datastructures/*.cxx
+    src/datastructures/*.hxx
 )
 
 add_library(cuistax SHARED ${LIBCUISTAX_SOURCES})
